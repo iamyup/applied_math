@@ -15,10 +15,6 @@ def pODE(y,t,a,b):
     # alpha'(t) = beta(t)
     # beta'(t) = -b*beta(t) - a*sin(alpha(t))
     alpha, beta = y
-    #print('##', y, len(y), np.shape(y))
-    #print('@@', alpha, np.shape(alpha))
-    #print('%%', beta, np.shape(beta))
-    #print('***',alpha,beta)
     d_alpha = beta
     d_beta = -b * beta - a * np.sin(alpha)
     return([d_alpha, d_beta])
@@ -37,14 +33,16 @@ for i in range(len(y_alpha)):
         x_i = t[i]
         break
 
-# Plots
-fig1 = plt.figure(figsize=(12,6))
+# Plots of alpha(t) and beta(t)
+fig = plt.figure(figsize=(12,8))
 plt.plot(t,y_alpha,'b--',t,y_beta,'r-')
 plt.axvline(x=x_i)
 plt.plot(t,[0]*len(y_alpha),'k')
-plt.legend(['alpha : the angle of deflection','beta : the angular speed','Maximum Angular Velocity'])
+plt.legend(['alpha : the angle of deflection','beta : the angular speed','Time of Maximum speed'])
 plt.xlabel('time [s]')
 plt.ylabel('state')
+plt.title('Plots of alpha(t) and beta(t)')
+fig.savefig('pendulum_1.png')
 
 ''' Comment 1
 As shown in the plot, when the pendulum pass the origin for the first time, the speed(magnitude of velocity)
@@ -56,7 +54,8 @@ values  = np.linspace(0, 1., 8)
 
 # let's get some fancy colors for each trajectory
 vcolors = plt.cm.autumn_r(np.linspace(0.3, 1., len(values)))
-fig2 = plt.figure(figsize=(12,6))
+
+fig2 = plt.figure(figsize=(12,8))
 
 # plot trajectories
 for v, col in zip(values, vcolors):
@@ -66,7 +65,7 @@ for v, col in zip(values, vcolors):
     X = integrate.odeint(pODE, X0, t ,args=(a,b))
     # plot the trajectory with varying linewidth and color
     plt.plot(X0[0], X0[1], 'xk')
-    plt.plot( X[:,0], X[:,1], lw=3.5*v, color=col, label='X0=(%.1f, %.1f)' % ( X0[0], X0[1]) )
+    plt.plot( X[:,0], X[:,1], lw=2*v+1, color=col, label='X%.f=(%.1f, %.1f)' % (np.where(values==v)[0], X0[0], X0[1]) )
     plt.legend(loc=2)
 
 # Make a quiver-plot
@@ -96,5 +95,16 @@ V_Norm = V/M
 
 plt.title('Direction field and Some trajectories')
 plt.quiver(X, Y, U_Norm, V_Norm, M, pivot='mid', cmap=plt.cm.jet)
+fig.savefig('pendulum_2.png')
 
 plt.show()
+
+''' Comment 2
+ => Qualitatively describe the motion of the pendulum for the fastest versus the second-slowest trajectory
+    : the fastest one(X7 in picture) initially have enough speed(kinetic energy) to go round and round for Four-times.
+    but at fifth turn, because of the friction, the speed comes down, which means that kinetic energy get lost.
+    eventually the pendulum stop to turn around, and move back and forth in the direction of angular velocity.
+
+    on the other hand, the second-slowest one(X1 in fig) don't have enough speed go round even in the first try.
+    so it goes back and forth and become to stay after some time.
+'''
