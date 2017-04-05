@@ -100,6 +100,8 @@ fig2.savefig('pendulum_2.png')
 
     on the other hand, the second-slowest one(X1 in fig) don't have enough speed go round even in the first try.
     so it goes back and forth and become to stay after some time.
+
+    Let's see the below animation-
 '''
 
 #fig3, axis = plt.subplots()
