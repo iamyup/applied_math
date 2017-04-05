@@ -103,7 +103,7 @@ fig2.savefig('pendulum_2.png')
 '''
 
 #fig3, axis = plt.subplots()
-fig3, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+fig3, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(12,5))
 ax1.set_xlim([-10, 10])
 ax2.set_xlim([-10, 10])
 ax1.set_title('the second-slowest pendulum')
