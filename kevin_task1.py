@@ -51,9 +51,6 @@ x = np.linspace(0, xmax, nb_points)
 y = np.linspace(0, ymax, nb_points)
 
 X, Y = np.meshgrid(x, y)
-print('XXX',X)
-print('YYY',Y)
-
 U = 1
 V = dy_dt(A, Y, K)
 
@@ -87,7 +84,7 @@ def onclick(event):
     y_progress[start_t] = iy
     #print(start_t+1, laterNumSteps)
 
-    for i in np.arange(start_t+1, int(xmax/dt)):
+    for i in np.arange(start_t+1, int(xmax/dt)-1):
         y_progress[i] = y_progress[i - 1] + dt * dy_dt(A, y_progress[i - 1], K)
         #print(ymax)
         if y_progress[i] > ymax:
