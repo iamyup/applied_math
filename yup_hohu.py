@@ -172,6 +172,10 @@ def main():
             # Long stimuulation with several current injections stimulation continuously from 10 - 40 ms
             # [THIS MODE SHOULD ALSO BE USED TO FIND OUT THE MAXIMUM FIRING FREQUENCY!]
             # The current injections should be taken from the following array
+
+            # result of our analysis
+            # In greater voltage, the more spikes are generated.
+
             I = np.array([10, 15, 20, 50])
             for idx, i in enumerate(I):
                 def i_ext(x):
@@ -185,8 +189,10 @@ def main():
         elif arg is "5":
             # No stimulation, but plot the membrane potential from -30 - 0 ms
             # [THIS MODE SHOULD BE USED TO DESCRIBE THE BEHAVIOR OF THE NEURON FOR TIMES BEFORE 0]
+
             # describe the behavior of the membrane for the times before 0
-            # Although no stimulation, when t is around -24, there is a spike.
+            # Although no stimulation, there is a spike near t's -24.
+
             I = np.array([0])
             for idx, i in enumerate(I):
                 def i_ext(x):
