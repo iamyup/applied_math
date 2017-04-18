@@ -78,8 +78,8 @@ E = np.array([-12, 115, 10.613])
 # time for integration (in ms)
 # note that we start at negative times to allow the membrane to relax
 # its dynamics, before we start plotting at t = 0
-time = np.linspace(-30, 50, 8000, retstep=True)
-
+time = np.linspace(-30, 50, 8001, retstep=True) # we changed step number from 8000 => 8001
+print(time)
 # starting values for V, n, m, h
 s0 = np.array([-10, 0, 0, 0])
 
@@ -145,12 +145,23 @@ def main():
                 ax2.legend(loc=1)
         elif arg is "3":
             # two close-by stimulations that do result in two spikes for I_ext=15 stimulation continuously from 10 - 12 ms and t0 - t0+2 ms
-            # [FOUND OUT THE **CLOSEST** TIMEPOINT t0 THAT GIVES TWO SPIKES THROUGH EXPERIMENTATION - I DO NOT NEED TO SEE THE CODE TO DO THIS, THE VALUE t0 IS ENOUGH IN THE SCRIPT!!]
+            # [FOUND OUT THE **CLOSEST** TIMEPOINT t0 THAT GIVES TWO SPIKES THROUGH EXPERIMENTATION -
+            # I DO NOT NEED TO SEE THE CODE TO DO THIS, THE VALUE t0 IS ENOUGH IN THE SCRIPT!!]
             # t0 is 20
             I = np.array([15.0])
             for idx, i in enumerate(I):
                 def i_ext(x):
-                    t0 = 20 # tried 16, 19
+                    t0 = 19.64
+                    '''
+                    please note that it's not 19.66 !!
+                    we set time step numbers as 8001 instead of 8000
+                    because if we set steps as 8000, the step size become 0.01000125 not just 0.01
+                    it makes difference of 0.02(ms)
+
+                    *** yes, it can be different if we use "integrate.odeint" of scipy instead of euler_method.
+                    we did not check yet.
+                    '''
+
                     return i * (x >= 10) - i * (x > 12) + i * (x >= t0) - i * (x > (t0+2))
 
                 V, n, m, h = euler_method(i_ext, t, dt)
@@ -169,27 +180,44 @@ def main():
                 ax2.plot(t[greater_0], h[greater_0], label='h')
                 ax2.legend(loc=1)
         elif arg is "4":
-            # Long stimuulation with several current injections stimulation continuously from 10 - 40 ms
+            # Long stimulation with several current injections stimulation continuously from 10 - 40 ms
             # [THIS MODE SHOULD ALSO BE USED TO FIND OUT THE MAXIMUM FIRING FREQUENCY!]
             # The current injections should be taken from the following array
 
             # result of our analysis
-            # In greater voltage, the more spikes are generated.
+            ''' basically in the greater stimulation(external current), the more spikes are generated
+            , which means HIGHER FREQUENCY.
 
-            I = np.array([10, 15, 20, 50])
+            but it's not so clear about the maximum frequency.
+            it depends on how high spike is a spike!
+
+            for I = 100, it generates almost 5 peaks during 30ms. and its frequency is 167 Hz.
+            but its peak is less than 50 mV.
+            if the peak is restricted over 50 mV, it generates almost 4 peaks during 30ms. and its frequency is 133 Hz.
+
+            finally, we can say that THE MAXIMUM FIRING FREQUENCY of this neuron is around 150Hz (or 130~170Hz).
+            '''
+            I = np.array([10,15,20,50])
+            #I = np.array([50])
             for idx, i in enumerate(I):
                 def i_ext(x):
-                    return i * (x >= 10) - i * (x > 40)
+                    return i * (x >= 10) - i * (x > 80)
 
                 V, n, m, h = euler_method(i_ext, t, dt)
 
-                plt.figure(idx)
+                #plt.figure(idx)
                 plt.plot(t[greater_0], i_ext(t[greater_0]), t[greater_0], V[greater_0])
                 plt.ylim([-20, 120])
         elif arg is "5":
             # No stimulation, but plot the membrane potential from -30 - 0 ms
             # [THIS MODE SHOULD BE USED TO DESCRIBE THE BEHAVIOR OF THE NEURON FOR TIMES BEFORE 0]
-
+            ''' Although there is no stimulation, a spike is found near t = -24.
+            but why? and how come is this possible?
+            it comes from equilibrium potentials, i.e E_K, E_Na, E_l.
+            For the initial condition, the membrane capacitor is empty(no electric charge).
+            So some current flows and the capacitor collects charges until reaching "Equilibrium" with E_K, E_Na, E_l.
+            that's why we can see the peak in the early part.
+            '''
             # describe the behavior of the membrane for the times before 0
             # Although no stimulation, there is a spike near t's -24.
 
@@ -207,5 +235,6 @@ def main():
             I = np.array([0])
 
     plt.show()
+
 if __name__ == '__main__':
     main()
