@@ -201,7 +201,7 @@ def main():
             #I = np.array([50])
             for idx, i in enumerate(I):
                 def i_ext(x):
-                    return i * (x >= 10) - i * (x > 80)
+                    return i * (x >= 10) - i * (x > 40)
 
                 V, n, m, h = euler_method(i_ext, t, dt)
 
