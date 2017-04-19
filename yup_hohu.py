@@ -3,7 +3,6 @@ import sys
 import numpy as np
 from matplotlib import pyplot as plt
 
-
 # ordinary differential equation of Hodgkin-Huxley equation
 def ode(i_ext, X, t):
     V, n, m, h = X
@@ -79,7 +78,7 @@ E = np.array([-12, 115, 10.613])
 # note that we start at negative times to allow the membrane to relax
 # its dynamics, before we start plotting at t = 0
 time = np.linspace(-30, 50, 8001, retstep=True) # we changed step number from 8000 => 8001
-print(time)
+#print(time)
 # starting values for V, n, m, h
 s0 = np.array([-10, 0, 0, 0])
 
@@ -117,9 +116,21 @@ def main():
 
                 V, n, m, h = euler_method(i_ext, t, dt)
 
-                plt.figure(idx)
-                plt.plot(t[greater_0], i_ext(t[greater_0]), t[greater_0], V[greater_0])
+                plt.figure(idx, figsize=(10, 12))
+                ax1 = plt.subplot(211)
+                ax1.plot(t[greater_0], i_ext(t[greater_0]), label='i_Ext : '+str(i)+' (micro_A/cm2)')
+                ax1.plot(t[greater_0], V[greater_0], label='V(t) : response to i_Ext')
                 plt.ylim([-20, 120])
+                ax1.legend(loc=1)
+
+                ax2 = plt.subplot(212)
+                ax2.plot(t[greater_0], i_ext(t[greater_0]), label='i_Ext : '+str(i)+' (micro_A/cm2)')
+                ax2.plot(t[greater_0], n[greater_0]*100, label='n-gating variable') # multiply 100 for clearance of the graph
+                ax2.plot(t[greater_0], m[greater_0]*100, label='m-gating variable') # multiply 100 for clearance of the graph
+                ax2.plot(t[greater_0], h[greater_0]*100, label='h-gating variable') # multiply 100 for clearance of the graph
+                plt.ylim([-10, 120])
+                ax2.legend(loc=1)
+
         elif arg is "2":
             # two close-by stimulations that do not result in two spikes for I_ext=15 stimulation given from 10 - 12 ms and 19 - 21 ms
             I = np.array([15.0])
@@ -130,30 +141,22 @@ def main():
 
                 V, n, m, h = euler_method(i_ext, t, dt)
 
-                greater_0 = np.where(t > 0)
-                plt.figure(idx)
-                ax1 = plt.subplot(211)
-                ax1.plot(t[greater_0], i_ext(t[greater_0]), label='injection')
-                ax1.plot(t[greater_0], V[greater_0], label='V(t)')
+                plt.figure(idx, figsize=(10, 6))
+                plt.plot(t[greater_0], i_ext(t[greater_0]), label='Injection(i_Ext) : '+str(i)+' (micro_A/cm2)')
+                plt.plot(t[greater_0], V[greater_0], label='V(t) : response to i_Ext')
                 plt.ylim([-20, 120])
-                ax1.legend(loc=1)
+                plt.legend(loc=1)
 
-                ax2 = plt.subplot(212)
-                ax2.plot(t[greater_0], n[greater_0], label='n')
-                ax2.plot(t[greater_0], m[greater_0], label='m')
-                ax2.plot(t[greater_0], h[greater_0], label='h')
-                ax2.legend(loc=1)
         elif arg is "3":
             # two close-by stimulations that do result in two spikes for I_ext=15 stimulation continuously from 10 - 12 ms and t0 - t0+2 ms
             # [FOUND OUT THE **CLOSEST** TIMEPOINT t0 THAT GIVES TWO SPIKES THROUGH EXPERIMENTATION -
             # I DO NOT NEED TO SEE THE CODE TO DO THIS, THE VALUE t0 IS ENOUGH IN THE SCRIPT!!]
-            # t0 is 20
             I = np.array([15.0])
             for idx, i in enumerate(I):
                 def i_ext(x):
                     t0 = 19.64
                     '''
-                    please note that it's not 19.66 !!
+                    note that it's not 19.66.
                     we set time step numbers as 8001 instead of 8000
                     because if we set steps as 8000, the step size become 0.01000125 not just 0.01
                     it makes difference of 0.02(ms)
@@ -166,19 +169,12 @@ def main():
 
                 V, n, m, h = euler_method(i_ext, t, dt)
 
-                greater_0 = np.where(t > 0)
-                plt.figure(idx)
-                ax1 = plt.subplot(211)
-                ax1.plot(t[greater_0], i_ext(t[greater_0]), label='injection')
-                ax1.plot(t[greater_0], V[greater_0], label='V(t)')
+                plt.figure(idx, figsize=(10, 6))
+                plt.plot(t[greater_0], i_ext(t[greater_0]), label='Injections(i_Ext) at 10(ms) and 19.64(ms)')
+                plt.plot(t[greater_0], V[greater_0], label='V(t) for two close-by stimulations')
                 plt.ylim([-20, 120])
-                ax1.legend(loc=1)
+                plt.legend(loc=1)
 
-                ax2 = plt.subplot(212)
-                ax2.plot(t[greater_0], n[greater_0], label='n')
-                ax2.plot(t[greater_0], m[greater_0], label='m')
-                ax2.plot(t[greater_0], h[greater_0], label='h')
-                ax2.legend(loc=1)
         elif arg is "4":
             # Long stimulation with several current injections stimulation continuously from 10 - 40 ms
             # [THIS MODE SHOULD ALSO BE USED TO FIND OUT THE MAXIMUM FIRING FREQUENCY!]
@@ -187,17 +183,17 @@ def main():
             # result of our analysis
             ''' basically in the greater stimulation(external current), the more spikes are generated
             , which means HIGHER FREQUENCY.
+            too much injection over I_ext = 150, however, kills the firing train.
 
-            but it's not so clear about the maximum frequency.
-            it depends on how high spike is a spike!
+            and it's not so clear about the maximum frequency. it depends on how high spike is a spike!
 
-            for I = 100, it generates almost 5 peaks during 30ms. and its frequency is 167 Hz.
+            for I_ext = 100, it generates almost 5 peaks during 30ms. and its frequency is 167 Hz.
             but its peak is less than 50 mV.
-            if the peak is restricted over 50 mV, it generates almost 4 peaks during 30ms. and its frequency is 133 Hz.
+            if the peak must satisfy to be over 50 mV, it generates almost 4 peaks during 30ms. and its frequency is 133 Hz.
 
             finally, we can say that THE MAXIMUM FIRING FREQUENCY of this neuron is around 150Hz (or 130~170Hz).
             '''
-            I = np.array([10,15,20,50])
+            I = np.array([10, 15, 20, 50])
             #I = np.array([50])
             for idx, i in enumerate(I):
                 def i_ext(x):
@@ -206,8 +202,21 @@ def main():
                 V, n, m, h = euler_method(i_ext, t, dt)
 
                 #plt.figure(idx)
-                plt.plot(t[greater_0], i_ext(t[greater_0]), t[greater_0], V[greater_0])
+                plt.figure(idx, figsize=(10, 12))
+                ax1 = plt.subplot(211)
+                ax1.plot(t[greater_0], i_ext(t[greater_0]), label='i_Ext : '+str(i)+' (micro_A/cm2)')
+                ax1.plot(t[greater_0], V[greater_0], label='V(t) : response to i_Ext')
                 plt.ylim([-20, 120])
+                ax1.legend(loc=1)
+
+                ax2 = plt.subplot(212)
+                ax2.plot(t[greater_0], i_ext(t[greater_0]), label='i_Ext : '+str(i)+' (micro_A/cm2)')
+                ax2.plot(t[greater_0], n[greater_0]*100, label='n-gating variable') # multiply 100 for clearance of the graph
+                ax2.plot(t[greater_0], m[greater_0]*100, label='m-gating variable') # multiply 100 for clearance of the graph
+                ax2.plot(t[greater_0], h[greater_0]*100, label='h-gating variable') # multiply 100 for clearance of the graph
+                plt.ylim([-10, 120])
+                ax2.legend(loc=1)
+
         elif arg is "5":
             # No stimulation, but plot the membrane potential from -30 - 0 ms
             # [THIS MODE SHOULD BE USED TO DESCRIBE THE BEHAVIOR OF THE NEURON FOR TIMES BEFORE 0]
@@ -228,8 +237,21 @@ def main():
 
                 V, n, m, h = euler_method(i_ext, t, dt)
 
-                plt.figure(idx)
-                plt.plot(t[smaller_0], i_ext(t[smaller_0]), t[smaller_0], V[smaller_0])
+                #plt.figure(idx)
+                plt.figure(idx, figsize=(10, 12))
+                ax1 = plt.subplot(211)
+                ax1.plot(t[smaller_0], i_ext(t[smaller_0]), label='i_Ext : '+str(i)+' (micro_A/cm2)')
+                ax1.plot(t[smaller_0], V[smaller_0], label='V(t) : response for equilibrium')
+                plt.ylim([-20, 120])
+                ax1.legend(loc=1)
+
+                ax2 = plt.subplot(212)
+                ax2.plot(t[smaller_0], i_ext(t[smaller_0]), label='i_Ext : '+str(i)+' (micro_A/cm2)')
+                ax2.plot(t[smaller_0], n[smaller_0]*100, label='n-gating variable') # multiply 100 for clearance of the graph
+                ax2.plot(t[smaller_0], m[smaller_0]*100, label='m-gating variable') # multiply 100 for clearance of the graph
+                ax2.plot(t[smaller_0], h[smaller_0]*100, label='h-gating variable') # multiply 100 for clearance of the graph
+                plt.ylim([-10, 120])
+                ax2.legend(loc=1)
         else:
             # No stimulation
             I = np.array([0])
