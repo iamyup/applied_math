@@ -1,3 +1,15 @@
+# Assignment4 - First task
+'''
+First, solve the DIY-IRIS task, where the goal is to replicate the PCA analysis for the wine-data using the flower data.
+
+Load the data, plot the pairplot
+and add comments in the code as to which dimensions are correlating highly.
+Then follow the recipe for the wine-data and do the PCA,
+ retaining the top two components and plotting the data in that new space using seaborn's lmplot
+ as indicated in the script fragment.
+ Insert a comment in the script that explains what you can see in this new plot.
+'''
+
 from sklearn import datasets
 import pandas
 import seaborn as sb
