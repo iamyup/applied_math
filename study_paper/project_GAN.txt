@@ -5,3 +5,6 @@ https://plus.google.com/111228733305737045296
 # this is not for GAN, but for the basic pattern recognition
 http://www.visiondummy.com/2014/04/geometric-interpretation-covariance-matrix/
 (was very instructive)
+
+# For just study(understanding concept of Baysian)
+https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading11.pdf
