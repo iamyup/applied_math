@@ -1,0 +1,20 @@
+Subject: Welcome to your Google Cloud Platform free trial
+
+YOUR GCP FREE TRIAL
+Congratulations, you've started your free trial. Over the next 60 days you have $300 in credit to spend building on Cloud Platform.
+We built GCP to power apps like YouTube, Gmail, and Maps. Now you can use it to power your own projects. With auto-scaling, built-in load balancing, big data tools, and per-minute billing, GCP handles it all—so you can just focus on code.
+Here's what you can expect:
+
+WEEKLY CHECK-INS
+We'll help you explore GCP and keep you updated on your progress.
+
+PRODUCT NEWS
+Exclusive updates on new products, features, and GCP announcements.
+
+SUPPORT AND GUIDANCE
+Guides, resources, and answers for when you need some help. Begin exploring GCP with this 10-minute interactive tutorial.
+Happy building.
+
+GO TO MY CONSOLE
+See you in the cloud,
+The Google Cloud Platform Team

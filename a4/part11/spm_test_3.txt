@@ -1,0 +1,27 @@
+Subject: The Basics of ASO – App Store Optimization
+
+The Basics of ASO – App Store Optimization
+
+
+
+Below is a guest post provided by our friends at Dynamic Search. It is a part of our ongoing series bringing you valuable content from around the net, with interesting lessons and insights about the business of building and marketing your business through mobile apps.
+
+App stores are something that did not exist before the year 2008 when both Apple and Google launched their respective stores, iTunes and Google Play. Now, however, app stores are a part of everyday life for millions of people around the world. For app stores to exist there must be app designers and creators as well as an audience to buy them. The problem for the designers is making sure that their app is easily found by the target audience and not lost at the bottom of the list. Because app store searches are the number one source for people to find new apps, the best way to get them found is with App Store Optimization (ASO).
+What is ASO?
+
+ASO is closely related to SEO, Search Engine Optimization. App Store Optimization is a process used to improve the visibility of a mobile app in an app store search. ASO is still very new and is an ever-changing dynamic. This means that there will inevitably be many changes in the near future regarding how it works and how to successfully use it.
+How do you get started?
+
+There are several ways to achieve successful ASO for your app; one of those is with an ASO tool. Some of the top rated ASO tools include Sensor Tower, SearchMan, Appcod.es, and MobileDevHQ. These tools give you what you need to improve your keywords and other marketing areas that determine app ranking within an app store search. You will also need to find a good keyword research tool like Stapley to decide what the best keywords to use with your app is. You will also need to research keywords to decide which ones are good to use and which ones are bad to use. When using ASO there is a certain list of things to concentrate on,
+
+Title – one of the most important things in any marketing is the title used. Make it short and catchy, something that people will remember easily. Add one or two keywords to the title when possible that describe what it does.
+Description –a good app description should include two blurbs and a screen shot. The first blurb should consist of 1-2 sentences that are very direct and to the point. They should outline the primary use of the app. The second blurb should be a longer description of how the app works and include the screenshot.
+Keywords –keyword options are not available in all app stores. The Apple iOS system is the main one that uses keywords whereas Google play only allows for descriptions. When using keywords be sure to choose carefully and wisely because the keyword section is only 100 characters long.
+Logo –a logo should be very eye-catching and appealing to consumers. Pick a bright color and keep in mind not to use too many details. The logo will be a small thumbnail most of the time so if it has too many details it will appear blurry and distorted.
+
+There is also the option of hiring an ASO professional if you do not feel comfortable with doing it on your own.
+ASO and SEO
+
+Remember that ASO and SEO go hand in hand. Just because you are using ASO you should not neglect SEO. To be entirely successful in marketing your app you should use all the marketing tools available to you. This means that using one technique does not mean that you can forget about all others.
+
+Experiment, research and find what works best for you and your particular app. There is always an audience out there waiting you just have to be sure that they can find our product. Most new apps are discovered through app store searches so learn how to use ASO as well as SEO. When you employ the use of ASO correctly, it means getting higher ratings. A higher rating means a bigger audience, and a bigger audience means more sales.

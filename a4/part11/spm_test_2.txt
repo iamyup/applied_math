@@ -1,0 +1,39 @@
+Subject: This Quick Trick Can Vastly Improve The iPhone’s Fingerprint Scanner
+
+This Quick Trick Can Vastly Improve The iPhone’s Fingerprint Scanner
+
+
+
+.If you’ve been less than impressed with Touch ID, the fingerprint sensor that comes on Apple’s new iPhone 5S, we may be able to help.
+
+Touch ID worked well for me when I tried it out in September, but my actual experience with my new iPhone 5S was different. Often, after placing my finger on the Home button, it wouldn’t read my print and I’d be prompted to “try again.”
+
+Although the fingerprint scanner works well for many people and has garnered positive reviews from some of the most prominent tech critics, others have found that it doesn’t work well for them.
+
+What to do? Apple recommends rescanning your finger (and, of course, making sure it’s clean and dry) or trying other fingers if you are having problems. The company also notes that things like lotion, oils and dry skin, or activities like swimming or exercising “may affect fingerprint recognition.”
+
+But I had an idea: Touch ID works with up to five different fingers, so what if I scanned my thumb multiple times, essentially telling my iPhone that it’s different fingers? After all, I rarely use a finger other than my right thumb to press the Home button, so those other four slots were empty.
+
+I thought that having more — and more varied — prints of my thumb could only help, so I tried it by “enrolling,” as Apple calls it, my thumb two more times. The result was fantastic — Touch ID now works much better than it did before, probably over 90 percent of the time.
+
+I’m not the only one who had this idea.
+
+Shane Hockersmith, a mechanic in the U.S. Army, told The Huffington Post in an email that now that he’s scanned the same finger multiple times, Touch ID works nearly “every time” — up from “about half the time.”
+
+A colleague of mine who was having readability issues with her new 5S also saw improvement by employing the strategy.
+
+I was unsure about my theory, and Apple would not comment on whether or not it would improve Touch ID. But Michael Fiske, the founder of Biology, a privacy company that focuses on cryptography and biometrics, said that adding more prints could, in fact, make Touch ID more reliable.
+
+“Entering multiple examples of the same print enhances pattern matching,” Fiske said. “Basically, it enables the pattern matching to be more flexible.” Adding more points can lower the rate of false rejects, he said — when the right fingerprint doesn’t give access to a phone.
+
+Fiske likened scanning your finger multiple times to teaching a child how to identify leaves from an oak tree. If you show the child three leaves from an oak tree, she’ll be more likely to later recognize an oak tree leaf than had you just shown her one.
+
+The workaround is by no means perfect. While it has improved my experience, Cpl. Hockersmith’s, and my colleague’s, my mom said that Touch ID still doesn’t work well enough for her to use it.
+
+CNET offers additional tips for using Touch ID, so check out that article if it’s still not working. And let us know in the comments below if this strategy worked for you.
+
+Sign Up for 30-Day Free Trial
+
+  Get Your OWN Branded App for iPhone,iPad, and Android!
+
+Just enter the promo code when you sign up.Hurry this deal ends soon!

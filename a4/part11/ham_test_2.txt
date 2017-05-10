@@ -1,0 +1,3 @@
+Subject: Status
+
+Next week, we will have visitors, who are looking for some emotion processing software from 현대... I would like you to make a few slides of your software and status so far as well as a demo of possible! It's fine if it only can recognize sad, happy, etc, but we should have something!
