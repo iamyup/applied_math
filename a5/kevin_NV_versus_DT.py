@@ -13,9 +13,8 @@ iris.columns = range(len(list(iris)))
 
 # load wine data as panda frame
 wine = pandas.read_csv(("http://archive.ics.uci.edu/ml/""machine-learning-databases/wine/wine.data"), header=None)
-
-data = iris.copy()
-#data = wine.copy()
+labelMapper = {1:0, 2:1, 3:2} # map the numbers to some nicer label
+wine[0]=wine[0].replace(labelMapper) # and convert array
 
 # The likelihood of the features is assumed to be Gaussian.
 def calculateProbability(x, mean, stdev):
@@ -27,7 +26,7 @@ It takes as input the percentage of each of the 3 IRIS classes to use as TRAININ
 Returns the training indices and testing indices for the three classes as two numpy arrays
 '''
 def shuffleIrisIndices(percentage):
-    len_indices = data.shape[0]
+    len_indices = iris.shape[0]
     #print('PRINT LEN :',len_indices)
     #print(int(len_indices * percentage / 100))
     train_indices = np.random.choice(len_indices, int(len_indices * percentage / 100), replace=False)
@@ -42,7 +41,7 @@ It takes as input the percentage of each of the 3 wine classes to use as TRAININ
 Returns the training indices and testing indices for the three classes as two numpy arrays.
 '''
 def shuffleWineIndices(percentage):
-    len_indices = len(data)
+    len_indices = len(wine)
     #print(len_indices)
     #print(int(len_indices * percentage / 100))
     train_indices = np.random.choice(len_indices, int(len_indices * percentage / 100), replace=False)
@@ -61,6 +60,7 @@ Returns the ERRORS that the classifier makes as PERCENTAGE of len(testData).
 
 def runOneSplitNaiveBayes(trainingData, testData):
     byClass = trainingData.groupby(0)
+    #print(byClass.describe())
     m, n = np.shape(byClass.mean())
     mv_matrix = np.zeros((m, n, 2))
 
@@ -72,6 +72,7 @@ def runOneSplitNaiveBayes(trainingData, testData):
 
     #print(mv_matrix)
     #print(testData)
+    #print(trainingData)
     error = 0
     for index, row in testData.iterrows():
         results = []
@@ -81,7 +82,8 @@ def runOneSplitNaiveBayes(trainingData, testData):
                 mean, stdev = mv_matrix[i,j]
                 x = row[j+1]
                 #print(x,mean,stdev)
-                prior_p *= calculateProbability(x, mean, stdev)
+                prior_p += np.log(calculateProbability(x, mean, stdev))
+                #print('class:',i,'--',np.log(calculateProbability(x, mean, stdev)), prior_p)
             results.append(prior_p)
         #print('God, thanks', index, results)
         #print(np.argmax(results),row[0])
@@ -114,30 +116,34 @@ def main():
     reps = 20
     data_dict = {}
     p_list = []
-    err_list = []
+    err_iris_list = []
+    err_wine_list = []
     for p in percentages:
         #if __name__ == '__main__':
         for i in np.arange(reps):
-            trainingData, testData = shuffleIrisIndices(p)
-            #trainingData, testData = shuffleWineIndices(p)
-            err = runOneSplitNaiveBayes(data.iloc[trainingData], data.iloc[testData])
-            #runOneSplitNaiveBayes(wine[trainingData], wine[testData])
+            trainingData_iris, testData_iris = shuffleIrisIndices(p)
+            trainingData_wine, testData_wine = shuffleWineIndices(p)
+            err_iris = runOneSplitNaiveBayes(iris.iloc[trainingData_iris], iris.iloc[testData_iris])
+            err_wine = runOneSplitNaiveBayes(wine.iloc[trainingData_wine], wine.iloc[testData_wine])
 
-            print('--Traing Set Percentage :',p,'--Error Rate :',err)
+            print('|Traing Set :',p,'(%)','|  IRIS Error Rate : %.2f' % round(err_iris,2),'(%)','|  WINE Error Rate : %.2f' % round(err_wine,2),'(%)')
+            #print('|Traing Set Percentage :', p, '| WINE Error Rate :', err_wine)
             #errorsNB = runOneSplitNaiveBayes(trainingData, testData)
             #errorsDT = runOneSplitDecisionTree(trainingData, testData)
             p_list.append(p)
-            err_list.append(err)
-    data_dict['Train %'] = p_list
-    data_dict['Error'] = err_list
-
-
+            err_iris_list.append(err_iris)
+            err_wine_list.append(err_wine)
+    data_dict['Train Set(%)'] = p_list
+    data_dict['IRIS Error(%)'] = err_iris_list
+    data_dict['WINE Error(%)'] = err_wine_list
+    #print(len(p_list),len(err_iris_list),len(err_wine_list))
     #sb.lmplot(x="Train %", y="Error", data=pandas.DataFrame(data_dict))
-    sb.factorplot(x="Train %", y="Error", data=pandas.DataFrame(data_dict),
-                       capsize=.2, palette="YlGnBu_d", size=10, aspect=1.5)
+    sb.set_style("whitegrid")
+    sb.factorplot(x="Train Set(%)", y="IRIS Error(%)", data=pandas.DataFrame(data_dict),
+                       capsize=.2, palette="Blues", size=10, aspect=1.5)
+    sb.factorplot(x="Train Set(%)", y="WINE Error(%)", data=pandas.DataFrame(data_dict),
+                       capsize=.2, palette="Oranges", size=10, aspect=1.5)
     plt.show()
-
-    #g.set(xlim=(0, 80), ylim=(-.05, 1.05))
 
 
 if __name__ == '__main__':
