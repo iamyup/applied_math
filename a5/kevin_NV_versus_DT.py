@@ -265,7 +265,7 @@ and moreover, the deviation of error of NB is even smaller than DT.
 
 # What are the storage requirements for the tree versus Naive Bayes in one split?
 '''
-Naive Bayes only need to store means and standard deviations(class likelihoods) of each traing class. ie. mv_matrix[i, j] in code.
+Naive Bayes only need to store THE FINAL means and standard deviations(class likelihoods) of each traing class. ie. mv_matrix[i, j] in code.
 Decision tree classifier generates the actual prediction at the leaf nodes, more information can be stored at the leaf nodes than class likelihoods.
 '''
 
