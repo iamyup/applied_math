@@ -188,8 +188,8 @@ def main():
             #print('[DT] IRIS Error : %.2f' % round(err_iris_DT, 2), '(%)',
             #      '|  WINE Error : %.2f' % round(err_wine_DT, 2), '(%)')
 
-            err_iris_DT = runOneSplitDecisionTree(iris.iloc[trainingData_iris], iris.iloc[testData_iris], max_depth=3)
-            err_wine_DT = runOneSplitDecisionTree(wine.iloc[trainingData_wine], wine.iloc[testData_wine], max_depth=3)
+            err_iris_DT = runOneSplitDecisionTree(iris.iloc[trainingData_iris], iris.iloc[testData_iris], max_depth=2)
+            err_wine_DT = runOneSplitDecisionTree(wine.iloc[trainingData_wine], wine.iloc[testData_wine], max_depth=2)
             #print('[DT] IRIS Error : %.2f' % round(err_iris_DT, 2), '(%)', '|  WINE Error : %.2f' % round(err_wine_DT, 2), '(%)')
             #print(' ')
             err_iris_list_DT_max.append(err_iris_DT)
@@ -215,8 +215,8 @@ def main():
     sb.set_style("whitegrid", {"xtick.major.size": "10"})
     paper_rc = {'lines.linewidth': 1, 'lines.markersize': 1}
     sb.set_context("paper", rc=paper_rc)
-    fig = plt.figure(figsize=(10, 10))
-    fig.suptitle("Naive Bayes VS Decision Tree", fontsize=24)
+    fig = plt.figure(figsize=(8, 8))
+    #fig.suptitle("Naive Bayes VS Decision Tree", fontsize=24, y=1.05)
 
     ax1 = fig.add_subplot(321)
     ax2 = fig.add_subplot(322)
@@ -239,10 +239,10 @@ def main():
                        capsize=.2, palette="hls", size=8, aspect=1.2, ax=ax2)
     plt.close()
     sb.factorplot(x="Train Size(%)", y="IRIS DT Error(%)", data=pandas.DataFrame(data_dict),
-                       capsize=.2, palette="deep", size=8, aspect=1.2, ax=ax3)
+                       capsize=.2, palette="Purples", size=8, aspect=1.2, ax=ax3)
     plt.close()
     sb.factorplot(x="Train Size(%)", y="WINE DT Error(%)", data=pandas.DataFrame(data_dict),
-                       capsize=.2, palette="deep", size=8, aspect=1.2, ax=ax4)
+                       capsize=.2, palette="Purples", size=8, aspect=1.2, ax=ax4)
     plt.close()
     sb.factorplot(x="Train Size(%)", y="IRIS DT(max=3) Error(%)", data=pandas.DataFrame(data_dict),
                        capsize=.2, palette="Oranges", size=8, aspect=1.2, ax=ax5)
@@ -265,13 +265,14 @@ and moreover, the deviation of error of NB is even smaller than DT.
 
 # What are the storage requirements for the tree versus Naive Bayes in one split?
 '''
-We think, in case of 'one split', the error rate is needed.
+Naive Bayes only need to store means and standard deviations(class likelihoods) of each traing class. ie. mv_matrix[i, j] in code.
+Decision tree classifier generates the actual prediction at the leaf nodes, more information can be stored at the leaf nodes than class likelihoods.
 '''
 
 # Try to decrease max_depth so that you get a tree that is comparable in size to Naive Bayes storage requirements
 # and repeat the experiment from above, making another plot
 '''
-when we limit depth as 3, we could see the performance got worse(of course).
+when we limit depth as 2, we could see the performance got worse(of course).
 and they show larger deviation via repetitions.
 we plotted all in one figure to compare at one sight.
 and we set p_step as 3% from 5 % to 95 % to save your time!? but it still takes long. :)
