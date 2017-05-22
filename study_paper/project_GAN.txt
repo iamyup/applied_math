@@ -8,3 +8,6 @@ http://www.visiondummy.com/2014/04/geometric-interpretation-covariance-matrix/
 
 # For just study(understanding concept of Baysian)
 https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading11.pdf
+
+# TP-GAN
+https://www.researchgate.net/publication/316098105_Beyond_Face_Rotation_Global_and_Local_Perception_GAN_for_Photorealistic_and_Identity_Preserving_Frontal_View_Synthesis
