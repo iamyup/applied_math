@@ -28,7 +28,6 @@ mnist = fetch_mldata('MNIST original', data_home='./data')
 # split the dataset into train and test and normalize
 # the first 60000 exmples already are the training set
 split = 60000
-
 X_train = np.reshape(mnist.data[:split], (-1, 1, 28, 28))/255.0
 Y_train = mnist.target[:split]
 X_test = np.reshape(mnist.data[split:], (-1, 1, 28, 28))/255.0
