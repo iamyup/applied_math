@@ -32,13 +32,13 @@ n_train_samples = 1000
 n_classes = 10
 
 # Optimize Filter
-n_feat1, n_feat2 = optimize_filter(5000, n_classes, X_train, Y_train, split)
+n_feat1, n_feat2 = optimize_filter(1000, n_classes, X_train, Y_train, split)
 
 # SETUP two-layers CONVnet
 nn = nnet.NeuralNetwork(
     layers=[
         nnet.Conv(
-            n_feats= n_feat1,
+            n_feats=n_feat1,
             filter_shape=(5, 5),
             strides=(1, 1),
             weight_scale=0.1,
@@ -50,7 +50,7 @@ nn = nnet.NeuralNetwork(
             mode='max',
         ),
         nnet.Conv(
-            n_feats= n_feat2,
+            n_feats=n_feat2,
             filter_shape=(5, 5),
             strides=(1, 1),
             weight_scale=0.1,
@@ -112,10 +112,11 @@ for i in range(20):
     dtc = grid_search_dtree.fit(X_tr, Y_tr)
     dtc_result = dtc.score(X_t, Y_t)
     DecisionTreeClassifier_result.append(dtc_result)
-    print('DecisionTree [',i+1,']', dtc_result)
+    print('DecisionTree  [',i+1,']', dtc_result)
 
     # Try CNN
     nn.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=15, batch_size=64)
+
 
 print('******************')
 print('** Final Result **')

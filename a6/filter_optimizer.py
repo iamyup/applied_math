@@ -51,7 +51,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
 
             # Train neural network
             t0 = time.time()
-            nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=15, batch_size=30)
+            nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=5, batch_size=30)
             t1 = time.time()
 
             # Evaluate on test data
@@ -64,7 +64,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
         # save the result for each n_feat
         result.append(np.mean(np.array(fold_result)))
 
-    best_one_layer = n_feats[result.index(max(result))]
+    best_one_layer = n_feats[result.index(max(result))][0]
 
 
     # Try two-layer CONVnet
