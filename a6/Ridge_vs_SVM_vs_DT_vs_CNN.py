@@ -33,7 +33,7 @@ n_classes = 10
 
 # Optimize Filter
 #TODO n_train_samples
-n_feat1, n_feat2 = optimize_filter(500, n_classes, X_train, Y_train, split)
+n_feat1, n_feat2 = optimize_filter(n_train_samples, n_classes, X_train, Y_train, split)
 
 # SETUP two-layers CONVnet
 nn = nnet.NeuralNetwork(
