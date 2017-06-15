@@ -64,7 +64,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
         # save the result for each n_feat
         result.append(np.mean(np.array(fold_result)))
 
-    best_one_layer = n_feats[result.index(max(result))]
+    best_one_layer = n_feats[result.index(max(result))][0]
 
 
     # Try two-layer CONVnet
