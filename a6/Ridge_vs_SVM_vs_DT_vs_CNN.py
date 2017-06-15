@@ -28,7 +28,7 @@ Y_test = mnist.target[split:]
 
 # for speed purpose do not train on all examples
 #TODO 50000
-n_train_samples = 500
+n_train_samples = 50000
 n_classes = 10
 
 # Optimize Filter
@@ -149,13 +149,13 @@ for i in range(20):
 
     # Try CNN
     #TODO max_iter
-    nn.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=10, batch_size=64)
+    nn.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=50, batch_size=64)
     CNN_result = 1 - nn.error(X_test, Y_test)
     CONVnet_result.append(CNN_result)
 
     # Try CNN with weight decay
     # TODO max_iter
-    nn_with_weight_decay.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=10, batch_size=64)
+    nn_with_weight_decay.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=50, batch_size=64)
     CNN_with_weight_decay_result = 1 - nn_with_weight_decay.error(X_test, Y_test)
     CONVnet_weightdecay_result.append(CNN_with_weight_decay_result)
 
