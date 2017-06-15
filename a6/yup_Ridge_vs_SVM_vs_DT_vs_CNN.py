@@ -61,7 +61,28 @@ k_fold = KFold(n_splits=10)
 result = []
 for index, nf in enumerate(n_feats):
     fold_result = []
-    print('*** Starting Test of feat [', index, ']...')
+    print('*** Starting Test of feat [', n_feats[index], ']...')
+
+    # SETUP one-layer CONVnet
+    nn = nnet.NeuralNetwork(
+        layers=[
+            nnet.Conv(
+                n_feats=nf,
+                filter_shape=(5, 5),
+                strides=(1, 1),
+                weight_scale=0.1,
+            ),
+            nnet.Activation('relu'),
+            nnet.Flatten(),
+            nnet.Linear(
+                n_out=n_classes,
+                weight_scale=0.1,
+            ),
+            nnet.LogRegression(),
+        ],
+    )
+
+    # TRAINING
     for train_indices, valid_indices in k_fold.split(np.array(X_train)):
         np.random.shuffle(train_indices)
         #print(train_indices, valid_indices)
@@ -70,28 +91,9 @@ for index, nf in enumerate(n_feats):
         X_val = X_train[valid_indices, ...]
         Y_val = Y_train[valid_indices, ...]
 
-        # Try one-layer CONVnet
-        nn = nnet.NeuralNetwork(
-            layers = [
-                nnet.Conv(
-                    n_feats=nf,
-                    filter_shape=(5,5),
-                    strides=(1,1),
-                    weight_scale = 0.1,
-                ),
-                nnet.Activation('relu'),
-                nnet.Flatten(),
-                nnet.Linear(
-                    n_out=n_classes,
-                    weight_scale=0.1,
-                ),
-                nnet.LogRegression(),
-            ],
-        )
-
         # Train neural network
         t0 = time.time()
-        nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=10, batch_size=30)
+        nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=15, batch_size=30)
         t1 = time.time()
 
         # Evaluate on test data
@@ -100,6 +102,7 @@ for index, nf in enumerate(n_feats):
 
         print('Duration: %.1fs' % (t1 - t0))
         print('Valid error rate: %.4f' % onelayer_result)
+
     # save the result for each n_feat
     result.append(np.mean(np.array(fold_result)))
 
