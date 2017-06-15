@@ -7,6 +7,7 @@ import time
 from sklearn.model_selection import KFold, cross_val_score
 
 # 10-fold cross validation
+# TODO 10-fold
 k_fold = KFold(n_splits=5)
 
 def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split, weight_decay=0.0):
