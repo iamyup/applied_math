@@ -92,7 +92,6 @@ for i in range(20):
     rcv = RidgeClassifierCV().fit(X_tr, Y_tr)
     ridge_result = rcv.score(X_t, Y_t)
     RidgeClassifierCV_result.append(ridge_result)
-    print('Ridge         [',i+1,']', ridge_result)
 
     # Try linear svc
     lsvc_clf = LinearSVC()
@@ -101,7 +100,6 @@ for i in range(20):
     lsvc = grid_search_lsvc.fit(X_tr, Y_tr)
     linear_result = lsvc.score(X_t, Y_t)
     LinearSVC_result.append(linear_result)
-    print('SVC           [',i+1,']', linear_result)
 
     # Try Decision Tree classifier
     dtree_clf = DecisionTreeClassifier()
@@ -110,13 +108,18 @@ for i in range(20):
     dtc = grid_search_dtree.fit(X_tr, Y_tr)
     dtc_result = dtc.score(X_t, Y_t)
     DecisionTreeClassifier_result.append(dtc_result)
-    print('DecisionTree  [',i+1,']', dtc_result)
 
     # Try CNN
     nn.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=10, batch_size=64)
     CNN_result = nn.error(X_test, Y_test)
     CONVnet_result.append(CNN_result)
-    print('2-layer CNN   [', i + 1, ']', CNN_result)
+
+    print('--------------------------------------')
+    print('Ridge         [',i+1,']', ridge_result)
+    print('SVC           [',i+1,']', linear_result)
+    print('DecisionTree  [',i+1,']', dtc_result)
+    print('2-layer CNN   [',i+1,']', CNN_result)
+    print('--------------------------------------')
 
 
 print('** Final Result **')
@@ -136,3 +139,5 @@ plot_data = pd.DataFrame({'Ridge':RidgeClassifierCV_result, 'SVC':LinearSVC_resu
 
 sns.set_style("whitegrid")
 ax = sns.boxplot(data=plot_data)
+
+plt.show()
