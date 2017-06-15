@@ -111,7 +111,7 @@ for i in range(20):
 
     # Try CNN
     nn.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=10, batch_size=64)
-    CNN_result = nn.error(X_test, Y_test)
+    CNN_result = 1 - nn.error(X_test, Y_test)
     CONVnet_result.append(CNN_result)
 
     print('--------------------------------------')
