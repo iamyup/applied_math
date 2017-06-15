@@ -37,7 +37,7 @@ n_feat1, n_feat2 = optimize_filter(5000, n_classes, X_train, Y_train, split)
 nn = nnet.NeuralNetwork(
     layers=[
         nnet.Conv(
-            n_feats=8,
+            n_feats= n_feat1,
             filter_shape=(5, 5),
             strides=(1, 1),
             weight_scale=0.1,
@@ -49,7 +49,7 @@ nn = nnet.NeuralNetwork(
             mode='max',
         ),
         nnet.Conv(
-            n_feats=16,
+            n_feats= n_feat2,
             filter_shape=(5, 5),
             strides=(1, 1),
             weight_scale=0.1,
