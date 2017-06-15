@@ -65,17 +65,19 @@ nn = nnet.NeuralNetwork(
     ],
 )
 
+# initialize other classifier results
 RidgeClassifierCV_result = []
 LinearSVC_result = []
 DecisionTreeClassifier_result = []
 
+# Train the pre-selected classifiers on 20 different subsets,
+# and average the results for each classifier
 for i in range(20):
 
     # Data Set
     # this is very important here - we select random subset!!!
     # this is done to ensure that the minibatches will actually see
     # different numbers in each training minibatch!
-
     train_idxs = np.random.randint(0, split-1, n_train_samples)
 
     # CNN Data input
@@ -88,13 +90,13 @@ for i in range(20):
     X_t = mnist.data[split:, ...] / 255.0
     Y_t = mnist.target[split:]
 
-    # Try Ridge Classifier
+    # Try Ridge Classifier: Simply call it
     rcv = RidgeClassifierCV().fit(X_tr, Y_tr)
     ridge_result = rcv.score(X_t, Y_t)
     RidgeClassifierCV_result.append(ridge_result)
     print('Ridge         [',i+1,']', ridge_result)
 
-    # Try linear svc
+    # Try linear svc: User GridSearchCV with param
     lsvc_clf = LinearSVC()
     param_grid_lsvc = {'C': [0.1, 1, 10, 100, 1000]}
     grid_search_lsvc = GridSearchCV(lsvc_clf, param_grid_lsvc)
@@ -103,7 +105,7 @@ for i in range(20):
     LinearSVC_result.append(linear_result)
     print('SVC           [',i+1,']', linear_result)
 
-    # Try Decision Tree classifier
+    # Try Decision Tree classifier: Use GridSearchCV with param
     dtree_clf = DecisionTreeClassifier()
     param_grid_dtree = {'max_depth': [2, 3, 4, 5, 6, None]}
     grid_search_dtree = GridSearchCV(dtree_clf, param_grid=param_grid_dtree)

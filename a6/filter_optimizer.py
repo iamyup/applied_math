@@ -78,6 +78,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
         nn = nnet.NeuralNetwork(
             layers=[
                 nnet.Conv(
+                    # optimal parameter for the first layer of the two-layer CNN
                     n_feats=best_one_layer,
                     filter_shape=(5, 5),
                     strides=(1, 1),
