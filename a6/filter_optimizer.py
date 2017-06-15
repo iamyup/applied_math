@@ -16,10 +16,10 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
     X_train = X_train[train_idxs, ...]
     Y_train = Y_train[train_idxs, ...]
 
-    result = []
+    one_layer_result = []
     for index, nf in enumerate(n_feats):
         fold_result = []
-        print('*** Starting 1-layer test of feat [', n_feats[index], ']...')
+        print('*** Starting 1-layer test of feat [', nf, ']...')
 
         # SETUP one-layer CONVnet
         nn = nnet.NeuralNetwork(
@@ -51,28 +51,27 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
 
             # Train neural network
             t0 = time.time()
+            # TODO: max_iter 50
             nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=5, batch_size=30)
             t1 = time.time()
 
             # Evaluate on test data
-            onelayer_result = nn.error(X_val, Y_val)
-            fold_result.append(onelayer_result)
+            error = nn.error(X_val, Y_val)
+            fold_result.append(error)
 
             print('Duration: %.1fs' % (t1 - t0))
-            print('Valid error rate: %.4f' % onelayer_result)
+            print('Valid error rate: %.4f' % error)
 
         # save the result for each n_feat
-        result.append(np.mean(np.array(fold_result)))
+        one_layer_result.append(np.mean(np.array(fold_result)))
 
-    best_one_layer = n_feats[result.index(max(result))][0]
-
+    best_one_layer = n_feats[np.argmin(one_layer_result)]
 
     # Try two-layer CONVnet
-
     two_layer_result = []
     for index, nf in enumerate(n_feats):
         fold_result = []
-        print('*** Starting 2-layers-test of feat [', n_feats[index], ']...')
+        print('*** Starting 2-layers-test of feat [', nf, ']...')
 
         # SETUP two-layers CONVnet
         nn = nnet.NeuralNetwork(
@@ -91,7 +90,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
                     mode='max',
                 ),
                 nnet.Conv(
-                    n_feats=n_feats,
+                    n_feats=nf,
                     filter_shape=(5, 5),
                     strides=(1, 1),
                     weight_scale=0.1,
@@ -117,24 +116,23 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
 
             # Train neural network
             t0 = time.time()
+            # TODO: max_iter 50
             nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=15, batch_size=30)
             t1 = time.time()
 
             # Evaluate on test data
-            two_result = nn.error(X_val, Y_val)
-            fold_result.append(two_result)
+            error = nn.error(X_val, Y_val)
+            fold_result.append(error)
 
             print('Duration: %.1fs' % (t1 - t0))
-            print('Valid error rate: %.4f' % two_result)
+            print('Valid error rate: %.4f' % error)
 
         # save the result for each n_feat
         two_layer_result.append(np.mean(np.array(fold_result)))
 
-    best_two_layer = n_feats[two_layer_result.index(max(two_layer_result))]
+    best_two_layer = n_feats[np.argmin(two_layer_result)]
 
-
-    print('One-layer result :', result)
-    print('One-Layer Optimum N_feat Value :', best_one_layer)
+    print('One-layer result :', one_layer_result)
     print('Two-layer result :', two_layer_result)
     print('Two-Layer Optimum N_feat Value :', best_one_layer, best_two_layer)
 
