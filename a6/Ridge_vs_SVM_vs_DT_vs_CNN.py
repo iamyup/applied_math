@@ -8,6 +8,7 @@ from sklearn.linear_model import RidgeClassifierCV
 from sklearn.svm import LinearSVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
+from filter_optimizer import optimize_filter
 import time
 
 import pandas as pd
