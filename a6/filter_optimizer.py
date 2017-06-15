@@ -7,7 +7,7 @@ import time
 from sklearn.model_selection import KFold, cross_val_score
 
 # 10-fold cross validation
-k_fold = KFold(n_splits=10)
+k_fold = KFold(n_splits=5)
 
 def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
     train_idxs = np.random.randint(0, split - 1, n_train_samples)
@@ -64,7 +64,8 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
         # save the result for each n_feat
         result.append(np.mean(np.array(fold_result)))
 
-    best_one_layer = n_feats[result.index(max(result))][0]
+    best_one_layer = n_feats[result.index(max(result))]
+    print('Optimum :', best_one_layer)
 
 
     # Try two-layer CONVnet
@@ -78,7 +79,6 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
         nn = nnet.NeuralNetwork(
             layers=[
                 nnet.Conv(
-                    # optimal parameter for the first layer of the two-layer CNN
                     n_feats=best_one_layer,
                     filter_shape=(5, 5),
                     strides=(1, 1),
@@ -91,7 +91,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
                     mode='max',
                 ),
                 nnet.Conv(
-                    n_feats=n_feats,
+                    n_feats=nf,
                     filter_shape=(5, 5),
                     strides=(1, 1),
                     weight_scale=0.1,
@@ -117,7 +117,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
 
             # Train neural network
             t0 = time.time()
-            nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=15, batch_size=30)
+            nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=5, batch_size=30)
             t1 = time.time()
 
             # Evaluate on test data
