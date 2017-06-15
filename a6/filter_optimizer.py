@@ -8,7 +8,7 @@ from sklearn.model_selection import KFold, cross_val_score
 
 # 10-fold cross validation
 # TODO 10-fold
-k_fold = KFold(n_splits=5)
+k_fold = KFold(n_splits=10)
 
 def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split, weight_decay=0.0):
     train_idxs = np.random.randint(0, split - 1, n_train_samples)
@@ -54,7 +54,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split, weight_dec
             # Train neural network
             t0 = time.time()
             # TODO: max_iter 50
-            nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=5, batch_size=30)
+            nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=50, batch_size=30)
             t1 = time.time()
 
             # Evaluate on test data
@@ -120,7 +120,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split, weight_dec
             # Train neural network
             t0 = time.time()
             # TODO: max_iter 50
-            nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=5, batch_size=30)
+            nn.fit(X_tr, Y_tr, learning_rate=0.1, max_iter=50, batch_size=30)
             t1 = time.time()
 
             # Evaluate on test data
