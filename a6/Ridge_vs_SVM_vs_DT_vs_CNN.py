@@ -114,10 +114,9 @@ for i in range(20):
     # Try CNN
     nn.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=15, batch_size=64)
 
-
 print('******************')
 print('** Final Result **')
 print('******************')
-print('RidgeClassifierCV      :',RidgeClassifierCV_result,'Mean :', np.mean(np.array(RidgeClassifierCV_result))*100,'(%)', 'Std :', np.std(np.array(RidgeClassifierCV_result)))
-print('LinearSVC              :',LinearSVC_result, 'Mean :', np.mean(np.array(LinearSVC_result))*100,'(%)', 'Std :', np.std(np.array(LinearSVC_result)))
-print('DecisionTreeClassifier :',DecisionTreeClassifier, 'Mean :', np.mean(np.array(DecisionTreeClassifier_result))*100,'(%)', 'Std :', np.std(np.array(DecisionTreeClassifier_result)))
+print('RidgeClassifierCV      :',np.array(RidgeClassifierCV_result),'Mean :', np.mean(np.array(RidgeClassifierCV_result))*100,'(%)', 'Std :', np.std(np.array(RidgeClassifierCV_result)))
+print('LinearSVC              :',np.array(LinearSVC_result), 'Mean :', np.mean(np.array(LinearSVC_result))*100,'(%)', 'Std :', np.std(np.array(LinearSVC_result)))
+print('DecisionTreeClassifier :',np.array(DecisionTreeClassifier_result), 'Mean :', np.mean(np.array(DecisionTreeClassifier_result))*100,'(%)', 'Std :', np.std(np.array(DecisionTreeClassifier_result)))
