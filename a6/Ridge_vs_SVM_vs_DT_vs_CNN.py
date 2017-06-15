@@ -64,10 +64,46 @@ nn = nnet.NeuralNetwork(
     ],
 )
 
+# to compare cnn between with and without weight decay
+weight_decay = 0.001
+n_feat1, n_feat2 = optimize_filter(500, n_classes, X_train, Y_train, split, weight_decay)
+nn_with_weight_decay = nnet.NeuralNetwork(
+    layers=[
+        nnet.Conv(
+            n_feats=n_feat1,
+            filter_shape=(5, 5),
+            strides=(1, 1),
+            weight_scale=0.1,
+            weight_decay=weight_decay,
+        ),
+        nnet.Activation('relu'),
+        nnet.Pool(
+            pool_shape=(2, 2),
+            strides=(2, 2),
+            mode='max',
+        ),
+        nnet.Conv(
+            n_feats=n_feat2,
+            filter_shape=(5, 5),
+            strides=(1, 1),
+            weight_scale=0.1,
+            weight_decay=weight_decay,
+        ),
+        nnet.Activation('relu'),
+        nnet.Flatten(),
+        nnet.Linear(
+            n_out=n_classes,
+            weight_scale=0.1,
+        ),
+        nnet.LogRegression(),
+    ],
+)
+
 RidgeClassifierCV_result = []
 LinearSVC_result = []
 DecisionTreeClassifier_result = []
 CONVnet_result = []
+CONVnet_weightdecay_result = []
 
 for i in range(20):
 
@@ -114,11 +150,16 @@ for i in range(20):
     CNN_result = 1 - nn.error(X_test, Y_test)
     CONVnet_result.append(CNN_result)
 
+    nn_with_weight_decay.fit(X_tr_CNN, Y_tr_CNN, learning_rate=0.1, max_iter=10, batch_size=64)
+    CNN_with_weight_decay_result = 1 - nn_with_weight_decay.error(X_test, Y_test)
+    CONVnet_weightdecay_result.append(CNN_with_weight_decay_result)
+
     print('--------------------------------------')
     print('Ridge         [',i+1,']', ridge_result)
     print('SVC           [',i+1,']', linear_result)
     print('DecisionTree  [',i+1,']', dtc_result)
     print('2-layer CNN   [',i+1,']', CNN_result)
+    print('2-layer CNN with weight decay  [', i+1, ']', CNN_with_weight_decay_result)
     print('--------------------------------------')
 
 
@@ -128,6 +169,7 @@ print('RidgeClassifierCV      :',np.array(RidgeClassifierCV_result),'Mean :', np
 print('LinearSVC              :',np.array(LinearSVC_result), 'Mean :', np.mean(np.array(LinearSVC_result))*100,'(%)', 'Std :', np.std(np.array(LinearSVC_result)))
 print('DecisionTreeClassifier :',np.array(DecisionTreeClassifier_result), 'Mean :', np.mean(np.array(DecisionTreeClassifier_result))*100,'(%)', 'Std :', np.std(np.array(DecisionTreeClassifier_result)))
 print('2-layer CNN            :',np.array(CONVnet_result), 'Mean :', np.mean(np.array(CONVnet_result))*100,'(%)', 'Std :', np.std(np.array(CONVnet_result)))
+print('2-layer CNN with weight decay            :',np.array(CONVnet_weightdecay_result), 'Mean :', np.mean(np.array(CONVnet_weightdecay_result))*100,'(%)', 'Std :', np.std(np.array(CONVnet_weightdecay_result)))
 
 '''
 pd.DataFrame(data=data[1:,1:],    # values
@@ -135,7 +177,7 @@ pd.DataFrame(data=data[1:,1:],    # values
     columns=data[0,1:])  # 1st row as the column names
 '''
 
-plot_data = pd.DataFrame({'Ridge':RidgeClassifierCV_result, 'SVC':LinearSVC_result, 'DTC':DecisionTreeClassifier_result, 'ConvNet':CONVnet_result})
+plot_data = pd.DataFrame({'Ridge':RidgeClassifierCV_result, 'SVC':LinearSVC_result, 'DTC':DecisionTreeClassifier_result, 'ConvNet':CONVnet_result, 'ConvNet with weight decay':CONVnet_weightdecay_result})
 
 sns.set_style("whitegrid")
 ax = sns.boxplot(data=plot_data)

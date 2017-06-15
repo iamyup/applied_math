@@ -9,7 +9,7 @@ from sklearn.model_selection import KFold, cross_val_score
 # 10-fold cross validation
 k_fold = KFold(n_splits=5)
 
-def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
+def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split, weight_decay=0.0):
     train_idxs = np.random.randint(0, split - 1, n_train_samples)
     n_feats = [2, 4, 6, 8, 12, 16]  # for the second layer!
 
@@ -29,6 +29,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
                     filter_shape=(5, 5),
                     strides=(1, 1),
                     weight_scale=0.1,
+                    weight_decay=weight_decay,
                 ),
                 nnet.Activation('relu'),
                 nnet.Flatten(),
@@ -81,6 +82,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
                     filter_shape=(5, 5),
                     strides=(1, 1),
                     weight_scale=0.1,
+                    weight_decay=weight_decay,
                 ),
                 nnet.Activation('relu'),
                 nnet.Pool(
@@ -93,6 +95,7 @@ def optimize_filter(n_train_samples,n_classes,X_train,Y_train, split):
                     filter_shape=(5, 5),
                     strides=(1, 1),
                     weight_scale=0.1,
+                    weight_decay=weight_decay,
                 ),
                 nnet.Activation('relu'),
                 nnet.Flatten(),
